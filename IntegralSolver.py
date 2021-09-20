@@ -2,17 +2,17 @@ import scipy.integrate as integrate
 import numpy as np
 
 def f(x):
-    return(1 / (np.sqrt(x)))
+    return(1 / (np.sqrt(x))) # Equation goes here, temporarily hard-coded as an example but will be based on input in the future
 
 def calc_error(true_value, measured_value):
     return (abs(measured_value - true_value) / true_value) * 100
 
 def calc_integral(function, lower_bound, upper_bound, step_count, decimal_places):
-    percent = "%"
-    steps = np.linspace(lower_bound, upper_bound, step_count + 1)
-    dx = (upper_bound - lower_bound) / step_count
+    percent = "%" # Required for Python string formatting
+    steps = np.linspace(lower_bound, upper_bound, step_count + 1) # Splits domain into evenly-spaced slices
+    dx = (upper_bound - lower_bound) / step_count # Determines width of slices for integration
     mram = []
-    for i in range(len(steps) - 1):
+    for i in range(len(steps) - 1): # Creates a domain of MRAM-compatible points based on base steps
         mram.append((steps[i] + steps[i + 1]) / 2)
     integral = integrate.quad(function, lower_bound, upper_bound)[0]
     integral_trapezoidal = integrate.trapezoid([function(x) for x in steps], dx = dx)
