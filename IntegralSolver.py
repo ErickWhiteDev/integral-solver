@@ -7,7 +7,7 @@ def f(x):
 def calc_error(true_value, measured_value):
     return (abs(measured_value - true_value) / true_value) * 100
 
-def calc_integral(function, lower_bound, upper_bound, step_count):
+def calc_integral(function, lower_bound, upper_bound, step_count, decimal_places):
     percent = "%"
     steps = np.linspace(lower_bound, upper_bound, step_count + 1)
     dx = (upper_bound - lower_bound) / step_count
@@ -20,14 +20,15 @@ def calc_integral(function, lower_bound, upper_bound, step_count):
     integral_lram = np.sum([function(x) * dx for x in steps[:step_count]])
     integral_rram = np.sum([function(x) * dx for x in steps[1:]])
     integral_mram = np.sum([function(x) * dx for x in mram])
-    print("Integral of f(x): {0}".format(integral))
-    print("Integral of f(x) using trapezoidal rule: {0} with {1}{2} error".format(integral_trapezoidal, calc_error(integral, integral_trapezoidal), percent))
-    print("Integral of f(x) using Simpson's rule: {0} with {1}{2} error".format(integral_simpsons, calc_error(integral, integral_simpsons), percent))
-    print("Integral of f(x) using LRAM: {0} with {1}{2} error".format(integral_lram, calc_error(integral, integral_lram), percent))
-    print("Integral of f(x) using RRAM: {0} with {1}{2} error".format(integral_rram, calc_error(integral, integral_rram), percent))
-    print("Integral of f(x) using MRAM: {0} with {1}{2} error".format(integral_mram, calc_error(integral, integral_mram), percent))
+    print("Integral of f(x): {0:.{d}f}".format(integral, d=decimal_places))
+    print("Integral of f(x) using trapezoidal rule: {0:.{d}f} with {1:.{d}f}{2} error".format(integral_trapezoidal, calc_error(integral, integral_trapezoidal), percent, d=decimal_places))
+    print("Integral of f(x) using Simpson's rule: {0:.{d}f} with {1:.{d}f}{2} error".format(integral_simpsons, calc_error(integral, integral_simpsons), percent, d=decimal_places))
+    print("Integral of f(x) using LRAM: {0:.{d}f} with {1:.{d}f}{2} error".format(integral_lram, calc_error(integral, integral_lram), percent, d=decimal_places))
+    print("Integral of f(x) using RRAM: {0:.{d}f} with {1:.{d}f}{2} error".format(integral_rram, calc_error(integral, integral_rram), percent, d=decimal_places))
+    print("Integral of f(x) using MRAM: {0:.{d}f} with {1:.{d}f}{2} error".format(integral_mram, calc_error(integral, integral_mram), percent, d=decimal_places))
 
 lower_bound = int(input("Lower bound: "))
 upper_bound = int(input("Upper bound: "))
 steps = int(input("Steps: "))
-calc_integral(f, lower_bound, upper_bound, steps)
+decimal_places = int(input("Decimal places: "))
+calc_integral(f, lower_bound, upper_bound, steps, decimal_places)
